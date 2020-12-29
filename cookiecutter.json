@@ -2,6 +2,7 @@
   "project_name": "Name of the project",
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
   "project_camel": "{{ cookiecutter.project_name.title().replace(' ', '') }}",
+  "function_name":"{{ cookiecutter.project_name.lower().replace(' ', '_') }}",
   "project_short_description": "A Short description of the project",
   "full_name": "Mark Honomichl",
   "github_name": "austincloudguru"
