@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  {{ cookiecutter.project_name }}
+
+  {{ cookiecutter.project_short_description }}
+
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  {{ cookiecutter.project_camel }}Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+
+  {{ cookiecutter.project_camel }}AdditionalPermission:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: "root"
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Action: "ssm:GetParameters"
+            Resource: "*"
+      Roles:
+        - !Ref {{ cookiecutter.project_camel }}FunctionRole
+
+Outputs:
+  {{ cookiecutter.project_camel }}Function:
+    Description: "{{ cookiecutter.project_name }} Lambda Function ARN"
+    Value: !GetAtt {{ cookiecutter.project_camel }}Function.Arn
+  {{ cookiecutter.project_camel }}FunctionIamRole:
+    Description: "Implicit IAM Role created for {{ cookiecutter.project_name }} function"
+    Value: !GetAtt {{ cookiecutter.project_camel }}FunctionRole.Arn
